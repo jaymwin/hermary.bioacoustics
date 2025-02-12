@@ -10,6 +10,6 @@
 
 read_aru_deployments <- function(google_sheet_url) {
 
-  read_sheet(google_sheet_url)
+  googlesheets4::read_sheet(google_sheet_url)
 
 }
