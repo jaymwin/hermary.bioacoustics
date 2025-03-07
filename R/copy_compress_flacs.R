@@ -39,7 +39,7 @@ copy_compress_flacs <- function(deployment_df, input_dir, temp_dir, output_dir) 
   wav_files |>
     furrr::future_walk(\(x) convert_to_flac(wav_file = x, input_dir = input_dir, temp_dir = temp_dir, output_dir = output_dir, pond_id = pond, visit_id = visit, swift_id = swift))
 
-  flac_files <- list.files(stringr::str_glue('{output_dir}/{pond}/{visit}'), pattern = "\\.flac$", full.names = FALSE, recursive = TRUE)
+  flac_files <- list.files(stringr::str_glue('{output_dir}/{pond}_{visit}'), pattern = "\\.flac$", full.names = FALSE, recursive = TRUE)
 
   stopifnot('Number of WAV files does not match number of FLAC files compressed' = length(wav_files) == length(flac_files))
 
