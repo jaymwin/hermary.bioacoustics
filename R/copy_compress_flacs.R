@@ -25,10 +25,18 @@ copy_compress_flacs <- function(deployment_df, input_dir, temp_dir, output_dir) 
     dplyr::filter(swift_id == swift) |>
     dplyr::pull(pond_code)
 
+  full_pond <-
+    deployment_df |>
+    dplyr::filter(swift_id == swift) |>
+    dplyr::pull(pond_id)
+
   visit <-
     deployment_df |>
     dplyr::filter(swift_id == swift) |>
     dplyr::pull(visit_id)
+
+  message('compressing WAVs to FLACS for:')
+  message(stringr::str_glue('pond name = {full_pond}, pond code = {pond}, visit ID = {visit}, swift ID = {swift}'))
 
   wav_files |>
     purrr::walk(\(x) create_temp_folders(wav_file = x, input_dir = input_dir, temp_dir = temp_dir))
