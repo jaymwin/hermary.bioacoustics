@@ -41,7 +41,7 @@ convert_to_flac <- function(wav_file, input_dir, temp_dir, output_dir, pond_id, 
   output_file <-
     file.path(
       stringr::str_glue(
-        '{output_dir}/{pond_id}_{visit_id}/{pond_id}_{visit_id}_{swift_id}/{pond_id}_{visit_id}_{swift_id}_{date}/{pond_id}_{visit_id}_{basename(temp_path)}'
+        '{output_dir}/{pond_id}_{visit_id}/{pond_id}_{visit_id}_{swift_id}/{pond_id}_{visit_id}_{swift_id}_{date}/{pond_id}_{visit_id}_{stringr::str_replace(basename(temp_path), "wav", "flac"}'
       )
     )
 
