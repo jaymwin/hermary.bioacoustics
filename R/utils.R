@@ -35,11 +35,13 @@ convert_to_flac <- function(wav_file, input_dir, temp_dir, output_dir, pond_id, 
     overwrite = FALSE
   )
 
+  date <- stringr::str_extract(wav_file, '[0-9]{8}')
+
   # Define the output flac file path
   output_file <-
     file.path(
       stringr::str_glue(
-        '{output_dir}/{pond_id}_{visit_id}/{pond_id}_{visit_id}_{swift_id}/{pond_id}_{visit_id}_{swift_id}_{date}/{pond_id}_{visit_id}_{swift_id}_{date}_{basename(temp_path)}'
+        '{output_dir}/{pond_id}_{visit_id}/{pond_id}_{visit_id}_{swift_id}/{pond_id}_{visit_id}_{swift_id}_{date}/{pond_id}_{visit_id}_{basename(temp_path)}'
       )
     )
 
