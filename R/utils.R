@@ -3,9 +3,9 @@
 create_temp_folders <- function(wav_file, input_dir, temp_dir) {
 
   stringr::str_replace(
-    stringr::str_remove(wav_file, basename(wav_file)),
+    stringr::str_remove(stringr::str_replace(wav_file, "\\(-\\d{4}\\)", ""), basename(stringr::str_replace(wav_file, "\\(-\\d{4}\\)", ""))),
     input_dir,
-    stringr::str_c(temp_dir, '/')
+    temp_dir
   ) |>
     fs::dir_create()
 
@@ -16,7 +16,9 @@ create_temp_folders <- function(wav_file, input_dir, temp_dir) {
 create_flac_folders <- function(wav_file, output_dir, pond_id, visit_id, swift_id) {
 
   date <- stringr::str_extract(wav_file, '[0-9]{8}')
-  fs::dir_create(path = stringr::str_glue('{output_dir}/{pond_id}_{swift_id}/{pond_id}_{swift_id}_{visit_id}/{pond_id}_{swift_id}_{visit_id}_{date}'))
+  fs::dir_create(
+    path = stringr::str_glue('{output_dir}/{pond_id}_{visit_id}/{pond_id}_{visit_id}_{swift_id}/{pond_id}_{visit_id}_{swift_id}_{date}')
+  )
 
 }
 
@@ -24,7 +26,8 @@ create_flac_folders <- function(wav_file, output_dir, pond_id, visit_id, swift_i
 # function to handle the file conversion process
 convert_to_flac <- function(wav_file, input_dir, temp_dir, output_dir, pond_id, visit_id, swift_id) {
 
-  temp_path <- stringr::str_c(stringr::str_replace(stringr::str_remove(wav_file, basename(wav_file)), input_dir, stringr::str_c(temp_dir, '/')), basename(wav_file))
+  temp_path <-
+    stringr::str_c(stringr::str_replace(stringr::str_remove(stringr::str_replace(wav_file, "\\(-\\d{4}\\)", ""), basename(stringr::str_replace(wav_file, "\\(-\\d{4}\\)", ""))), input_dir, temp_dir), basename(stringr::str_replace(wav_file, "\\(-\\d{4}\\)", "")))
 
   fs::file_copy(
     path = wav_file,
@@ -36,7 +39,7 @@ convert_to_flac <- function(wav_file, input_dir, temp_dir, output_dir, pond_id, 
   output_file <-
     file.path(
       stringr::str_glue(
-        '{output_dir}/{pond_id}_{swift_id}/{pond_id}_{swift_id}_{visit_id}/{pond_id}_{swift_id}_{visit_id}_{stringr::str_extract(wav_file, "[0-9]{8}")}/{pond_id}_{swift_id}_{visit_id}_{stringr::str_extract(wav_file, "[0-9]{8}_[0-9]{6}")}.flac'
+        '{output_dir}/{pond_id}_{visit_id}/{pond_id}_{visit_id}_{swift_id}/{pond_id}_{visit_id}_{swift_id}_{date}/{pond_id}_{visit_id}_{swift_id}_{date}_{basename(temp_path)}'
       )
     )
 
