@@ -23,7 +23,7 @@ copy_compress_flacs <- function(deployment_df, input_dir, temp_dir, output_dir) 
   pond <-
     deployment_df |>
     dplyr::filter(swift_id == swift) |>
-    dplyr::pull(pond_id)
+    dplyr::pull(pond_code)
 
   visit <-
     deployment_df |>
